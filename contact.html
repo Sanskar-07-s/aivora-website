@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="utf-8"/><title>Contact</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header class="site-header"><div class="brand">AIVORA</div><nav><a href="index.html">Home</a></nav></header>
+<main class="container">
+  <h2>Contact</h2>
+  <form id="contactForm">
+    <input id="name" placeholder="Your name"/><input id="email" placeholder="Your email"/><textarea id="message" placeholder="Message"></textarea>
+    <button type="button" onclick="submitContact()">Send</button>
+  </form>
+  <div id="contactMsg"></div>
+</main>
+<script>
+function submitContact(){
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const msg = document.getElementById('message').value;
+  if(!name||!email||!msg){ alert('Fill all'); return; }
+  // demo: email composer fallback
+  window.location.href = `mailto:you@domain.com?subject=${encodeURIComponent('Contact from '+name)}&body=${encodeURIComponent(msg+' (from '+email+')')}`;
+  document.getElementById('contactMsg').innerText = 'Opened mail client to send message.';
+}
+</script>
+</body></html>
