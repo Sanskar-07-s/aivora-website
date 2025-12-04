@@ -37,3 +37,20 @@ body{ margin:0; font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Pop
 .muted{ color:var(--muted); }
 .center{ text-align:center; margin-top:14px; }
 @media(max-width:720px){ .cards{ flex-direction:column; align-items:center; } .card{ width:92%; } }
+/* simple fade-in */
+.fade-in { animation: fadeIn 700ms ease both; }
+@keyframes fadeIn { from { opacity:0; transform: translateY(6px);} to{opacity:1; transform:none;}}
+
+/* button hover */
+.btn, .danger, .auth-actions button {
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.btn:hover, .danger:hover, .auth-actions button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+}
+
+/* subtle floating for hero */
+.hero h1 { animation: float 6s ease-in-out infinite; }
+@keyframes float { 0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+
