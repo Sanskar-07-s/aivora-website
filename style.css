@@ -1,0 +1,39 @@
+:root{ --bg:#0f1020; --card:#171725; --accent:#ff2770; --muted:#bfbfc8; }
+*{ box-sizing:border-box; }
+body{ margin:0; font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Poppins",sans-serif; background:linear-gradient(180deg,var(--bg),#0b0b12); color:#fff; min-height:100vh; }
+.site-header{ display:flex; justify-content:space-between; align-items:center; padding:14px 20px; background:rgba(0,0,0,0.15); }
+.site-header .brand{ font-weight:700; font-size:20px; color:var(--accent); }
+.site-header nav a{ color:#fff; margin-left:14px; text-decoration:none; font-weight:600; }
+.container{ max-width:980px; margin:28px auto; padding:0 18px; }
+.hero{text-align:center; padding:32px 0;}
+.lead{ color:var(--muted); font-size:16px; margin:6px 0 28px; }
+.cards{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:28px; }
+.card{ background:var(--card); padding:18px; border-radius:12px; width:260px; box-shadow:0 6px 18px rgba(0,0,0,0.5); text-align:left; }
+.card h3{ margin:0 0 8px; }
+.btn{ display:inline-block; margin-top:12px; background:var(--accent); color:#fff; padding:8px 12px; border-radius:8px; text-decoration:none; }
+.btn-ghost{ background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,0.06); padding:8px 12px; border-radius:8px; }
+.auth{ max-width:540px; margin:40px auto; }
+.auth-box{ background:var(--card); padding:18px; border-radius:10px; }
+.auth-box input{ width:100%; padding:10px; margin:8px 0 12px; border-radius:8px; border:0; background:rgba(255,255,255,0.03); color:#fff; }
+.auth-actions{ display:flex; gap:8px; }
+.auth-actions button{ padding:10px 12px; border-radius:8px; border:0; cursor:pointer; background:var(--accent); color:#fff; }
+.auth-actions .outline{ background:transparent; border:1px solid rgba(255,255,255,0.06); color:#fff; }
+.hint{ margin-top:10px; color:var(--muted); font-size:13px;}
+.profile{ background:var(--card); padding:12px; border-radius:10px; width:100%; max-width:420px; }
+.cards.small{ display:flex; gap:10px; margin-top:16px; }
+.mini-card{ background:#13131a; padding:10px; border-radius:8px; margin-bottom:8px; }
+.chatbox{ background:var(--card); padding:8px; border-radius:10px; max-width:800px; margin:0 auto; }
+.chat-window{ max-height:360px; overflow:auto; padding:12px; border-radius:8px; background:rgba(0,0,0,0.12); }
+.chat-msg{ margin-bottom:10px; }
+.chat-input{ display:flex; gap:8px; margin-top:10px; }
+.chat-input input{ flex:1; padding:10px; border-radius:8px; border:0; background:rgba(255,255,255,0.03); color:#fff; }
+.chat-input button{ padding:10px 12px; border-radius:8px; border:0; background:var(--accent); cursor:pointer; }
+.form input{ padding:10px; width:100%; margin:8px 0; border-radius:8px; border:0; background:rgba(255,255,255,0.03); color:#fff; }
+.mini-card button{ margin-top:6px; background:#222; border:0; padding:6px 8px; border-radius:6px; color:#fff; cursor:pointer; }
+.safety-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px; }
+.danger{ background:#d62839; color:#fff; border:0; padding:10px 12px; border-radius:8px; cursor:pointer; }
+.log{ font-size:13px; color:var(--muted); padding:8px 0; }
+.site-footer{ text-align:center; margin:28px 0; color:var(--muted); font-size:13px; }
+.muted{ color:var(--muted); }
+.center{ text-align:center; margin-top:14px; }
+@media(max-width:720px){ .cards{ flex-direction:column; align-items:center; } .card{ width:92%; } }

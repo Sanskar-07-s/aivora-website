@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Safety — AIVORA</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">AIVORA</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>Safety Suite</h2>
+    <p>One-tap SOS will share your location via your email client. For production, connect to Twilio / SMS / emergency endpoint.</p>
+
+    <div class="safety-actions">
+      <button class="danger" onclick="sendSOS()">Send SOS (share location)</button>
+      <button onclick="startTracking()">Start live tracking (console)</button>
+      <button onclick="stopTracking()">Stop tracking</button>
+    </div>
+
+    <div id="sosLog"></div>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    let trackingId = null;
+    async function sendSOS(){
+      if(!navigator.geolocation){
+        alert('Geolocation not supported');
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(pos=>{
+        const lat = pos.coords.latitude.toFixed(6);
+        const lon = pos.coords.longitude.toFixed(6);
+        const subject = encodeURIComponent('AIVORA SOS — Need Help');
+        const body = encodeURIComponent(`I need help. My location: https://www.google.com/maps/search/?api=1&query=${lat},${lon}`);
+        // open mail client
+        window.location.href = `mailto:emergency@example.com?subject=${subject}&body=${body}`;
+        log(`SOS opened email composer with location ${lat},${lon}`);
+      }, err=>{
+        alert('Unable to get location: '+err.message);
+      }, {enableHighAccuracy:true, timeout:10000});
+    }
+
+    function startTracking(){
+      if(!navigator.geolocation){ alert('Geolocation not supported'); return; }
+      trackingId = navigator.geolocation.watchPosition(pos=>{
+        const lat = pos.coords.latitude.toFixed(6);
+        const lon = pos.coords.longitude.toFixed(6);
+        log(`Tracking: ${lat},${lon} — (timestamp ${new Date(pos.timestamp).toLocaleTimeString()})`);
+        // For production: POST to emergency server or supabase realtime
+      }, err=>{ log('Track error: '+err.message); }, {enableHighAccuracy:true, maximumAge:5000, timeout:5000});
+      log('Started tracking (check console and log).');
+    }
+
+    function stopTracking(){ if(trackingId!=null){ navigator.geolocation.clearWatch(trackingId); trackingId = null; log('Stopped tracking'); } }
+
+    function log(msg){
+      console.log(msg);
+      const d = document.getElementById('sosLog');
+      d.innerHTML = `<div class="log">${escapeHtml(msg)}</div>` + d.innerHTML;
+    }
+  </script>
+</body>
+</html>

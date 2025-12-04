@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Dashboard — AIVORA</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">AIVORA</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="ai.html">AI</a>
+      <a href="skills.html">Skills</a>
+      <a href="safety.html">Safety</a>
+      <a id="logoutBtn" href="#">Logout</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>Dashboard</h2>
+    <div id="profileCard" class="profile">
+      <p><strong id="userEmail">—</strong></p>
+      <p id="userMode">Mode: Demo</p>
+    </div>
+
+    <div class="cards small">
+      <a class="card" href="ai.html">Open Assistant</a>
+      <a class="card" href="skills.html">Manage Skills</a>
+      <a class="card" href="safety.html">Safety Tools</a>
+    </div>
+
+    <section>
+      <h3>Your saved roadmaps</h3>
+      <div id="roadmapsList"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><small>AIVORA — Demo</small></footer>
+
+  <script src="app.js"></script>
+  <script>
+    (async ()=>{
+      await protectPage(); // redirect to login if needed
+      const user = await getCurrentUser();
+      document.getElementById('userEmail').innerText = user?.email || 'Demo user';
+      document.getElementById('userMode').innerText = (user?.mode || 'Demo');
+      document.getElementById('logoutBtn').onclick = async (e)=>{
+        e.preventDefault();
+        await signOut();
+      };
+
+      const rlist = loadRoadmaps();
+      const container = document.getElementById('roadmapsList');
+      container.innerHTML = rlist.length ? rlist.map(r=>`<div class="mini-card"><strong>${escapeHtml(r.title)}</strong><p>${escapeHtml(r.items.join(', '))}</p></div>`).join('') : '<p>No roadmaps yet. Add from Skills page.</p>';
+    })();
+  </script>
+</body>
+</html>

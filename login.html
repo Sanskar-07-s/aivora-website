@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Login — AIVORA</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">AIVORA</div>
+    <nav>
+      <a href="index.html">Home</a>
+    </nav>
+  </header>
+
+  <main class="container auth">
+    <h2>Sign in / Sign up</h2>
+
+    <div class="auth-box">
+      <label>Email</label>
+      <input id="email" type="email" placeholder="you@example.com" />
+      <label>Password</label>
+      <input id="password" type="password" placeholder="password" />
+      <div class="auth-actions">
+        <button onclick="handleLogin()">Login</button>
+        <button class="outline" onclick="handleSignup()">Create account</button>
+      </div>
+
+      <div class="hint">
+        <label><input id="useSupabase" type="checkbox" /> Use Supabase (uncheck to use demo)</label>
+      </div>
+
+      <div class="note">
+        <small>Demo mode stores a simple user in your browser. To use real auth, provide SUPABASE keys in <code>app.js</code>.</small>
+      </div>
+    </div>
+
+    <div class="center">
+      <a href="index.html" class="btn-ghost">Back to Home</a>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    async function handleSignup(){
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const useSupabase = document.getElementById('useSupabase').checked;
+      if(!email || !password){ alert('Fill both fields'); return; }
+      try{
+        if(useSupabase && SUPABASE_READY()){
+          await supabaseAuthSignUp(email,password);
+          alert('Check your email for confirmation (Supabase).');
+        } else {
+          demoSignup(email,password);
+          alert('Demo signup complete. You are logged in.');
+          window.location.href = 'dashboard.html';
+        }
+      }catch(e){ alert(e.message||e); }
+    }
+
+    async function handleLogin(){
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const useSupabase = document.getElementById('useSupabase').checked;
+      if(!email || !password){ alert('Fill both fields'); return; }
+      try{
+        if(useSupabase && SUPABASE_READY()){
+          await supabaseAuthSignIn(email,password);
+          window.location.href = 'dashboard.html';
+        } else {
+          const ok = demoLogin(email,password);
+          if(!ok){ alert('Invalid demo credentials'); return; }
+          window.location.href = 'dashboard.html';
+        }
+      }catch(e){ alert(e.message||e); }
+    }
+  </script>
+</body>
+</html>
